@@ -1,6 +1,8 @@
-<!-- DeviceManagement -->
+<!-- src/pages/DeviceManagement.vue -->
 <template>
-  <DeviceTable />
+  <v-container fluid>
+    <DeviceTable />
+  </v-container>
 </template>
 
 <script setup>

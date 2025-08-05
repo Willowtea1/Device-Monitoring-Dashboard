@@ -1,7 +1,7 @@
 <!-- src/App.vue -->
 <template>
   <v-app>
-    <v-navigation-drawer app permanent>
+    <v-navigation-drawer app permanent width="200">
       <v-list>
         <v-list-item to="/" title="Dashboard" />
         <v-list-item to="/devices" title="Device Management" />

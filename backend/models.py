@@ -1,6 +1,7 @@
 # backend/models.py #
 from pydantic import BaseModel
 from typing import List, Union
+from datetime import datetime
 
 class Device(BaseModel):
     id: str
@@ -21,6 +22,7 @@ class Device(BaseModel):
     remaining_rul_days: int
     will_fail_7_days: Union[bool, str]
     status: str
+    initial_timestamp: datetime 
     image_url: str
 
 class HistoryItem(BaseModel):

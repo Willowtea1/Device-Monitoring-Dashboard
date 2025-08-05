@@ -157,7 +157,7 @@ import axios from 'axios'
 const devices = ref([])
 const summary = ref({})
 const selectedType = ref('Mixer')
-const selectedID = ref('MC_00000')
+const selectedID = ref('MC_000000')
 const selectedStatus = ref(null)
 const featuredIndex = ref(0)
 
@@ -201,6 +201,15 @@ const fetchSummary = async () => {
 onMounted(async () => {
   await fetchDevices()
   await fetchSummary()
+
+  // Ensure selectedID matches the selectedType
+  if (selectedType.value && filteredIDs.value.length > 0) {
+    if (!filteredIDs.value.includes(selectedID.value)) {
+      selectedID.value = filteredIDs.value[0]
+    }
+  } else {
+    selectedID.value = null
+  }
 })
 
 // Dropdown Data

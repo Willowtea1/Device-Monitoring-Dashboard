@@ -1,6 +1,10 @@
+<!-- src/components/DeviceTable -->
 <template>
   <v-container>
-    <h1 class="text-h5 mb-4">Device Monitor Dashboard</h1>
+    <h1 class="text-h4 mb-4 d-flex align-center gap-2">
+      <v-icon icon="mdi-cellphone-link" size="36" class="me-2" />
+      Device Management
+    </h1>
 
     <v-row class="mb-4" dense align="center">
       <!-- Search Box -->
@@ -11,10 +15,11 @@
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
           clearable
-          class="search-bar align-self-end"
-          density="compact"
           hide-details
           rounded="pill"
+          density="compact"
+          class="rounded-pill pa-0 text-body-2"
+          style="height: 40px; max-width: 500px"
         />
       </v-col>
 
@@ -88,26 +93,99 @@
     </v-data-table>
 
     <!-- Device Details Dialog -->
-    <v-dialog v-model="dialog" max-width="600">
-      <v-card v-if="selectedDevice">
-        <v-card-title class="headline"
-          >{{ selectedDevice.id }} — {{ selectedDevice.type }}</v-card-title
-        >
-        <v-card-text>
-          <p><strong>Status:</strong> {{ selectedDevice.status }}</p>
-          <p><strong>Temperature:</strong> {{ selectedDevice.temperature }} °C</p>
-          <p><strong>Vibration:</strong> {{ selectedDevice.vibration }} mm/s</p>
-          <p><strong>Sound:</strong> {{ selectedDevice.sound }} dB</p>
-          <p><strong>Power:</strong> {{ selectedDevice.power }} kW</p>
-          <p><strong>Operational Hours:</strong> {{ selectedDevice.operational_hours }}</p>
-          <p>
-            <strong>Last Maintenance:</strong> {{ selectedDevice.last_maintenance_days }} days ago
-          </p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" text @click="dialog = false">Close</v-btn>
-        </v-card-actions>
+    <v-dialog v-model="dialog" max-width="700">
+      <v-card class="pt-10 pb-10 flex-grow-1 d-flex align-center" v-if="selectedDevice">
+        <v-row class="align-center flex-grow-1">
+          <!-- Device Info (No navigation buttons) -->
+          <v-col cols="12">
+            <v-row>
+              <!-- Image -->
+              <v-col cols="12" md="5">
+                <v-img
+                  :src="selectedDevice.image_url || 'https://via.placeholder.com/250'"
+                  width="250"
+                  height="250"
+                  class="rounded"
+                />
+              </v-col>
+
+              <!-- Stats -->
+              <v-col cols="12" md="7">
+                <v-row dense>
+                  <v-col cols="12" sm="10">
+                    <v-text-field
+                      label="Machine ID"
+                      :model-value="selectedDevice.id || '-'"
+                      readonly
+                      variant="outlined"
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col cols="12" sm="2">
+                    <div class="d-flex flex-column align-center">
+                      <label class="text-caption font-weight-bold mb-1 text-center">Status</label>
+                      <v-chip
+                        :color="selectedDevice.status === 'On' ? 'green' : 'red'"
+                        class="text-white font-weight-bold justify-center"
+                        variant="flat"
+                        style="width: 100px"
+                      >
+                        {{ selectedDevice.status || '-' }}
+                      </v-chip>
+                    </div>
+                  </v-col>
+                </v-row>
+
+                <v-row dense>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="Temperature"
+                      :model-value="(selectedDevice.temperature ?? '-') + ' °C'"
+                      readonly
+                      variant="outlined"
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="Sound"
+                      :model-value="(selectedDevice.sound ?? '-') + ' dB'"
+                      readonly
+                      variant="outlined"
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="Vibration"
+                      :model-value="(selectedDevice.vibration ?? '-') + ' mm/s'"
+                      readonly
+                      variant="outlined"
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="Power"
+                      :model-value="(selectedDevice.power ?? '-') + ' kW'"
+                      readonly
+                      variant="outlined"
+                      dense
+                    />
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+
+            <v-row justify="end" class="mt-4">
+              <v-btn color="primary" @click="dialog = false">Close</v-btn>
+            </v-row>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
   </v-container>
@@ -201,26 +279,4 @@ const openDetails = (device) => {
 }
 </script>
 
-<style>
-.search-bar {
-  height: 36px;
-  font-size: 0.875rem;
-  padding: 0 16px;
-  --v-input-padding-top: 0px;
-  --v-input-padding-bottom: 0px;
-}
-
-.search-bar .v-input__control {
-  min-height: 36px;
-  padding-top: 0;
-  padding-bottom: 0;
-  align-items: center;
-}
-
-.search-bar .v-field__input {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  height: 36px !important;
-  line-height: 36px !important;
-}
-</style>
+<style></style>

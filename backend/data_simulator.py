@@ -3,6 +3,8 @@ import pandas as pd
 import time
 import random
 from models import Device
+from datetime import datetime
+
 
 # Load the Excel file (update path if needed)
 df = pd.read_excel("iot_sensors.xlsx")
@@ -118,6 +120,7 @@ def generate_device_data(simulate=False):
             "will_fail_7_days": bool(row["Failure_Within_7_Days"]),
             "status": row["Status"].strip().capitalize(),
             "image_url": row["image_url"],
+            "initial_timestamp": datetime.utcnow()
         }
 
 

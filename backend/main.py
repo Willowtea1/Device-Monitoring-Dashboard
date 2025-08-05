@@ -3,12 +3,17 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from starlette.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 
 from typing import List
 from models import Device, DeviceDetail
 from data_simulator import generate_device_data, get_device_history
+from analytic_simulator import simulate_data  
 
-app = FastAPI()
+import pandas as pd
+import os
+    
+app = FastAPI() 
 
 # Serve static images
 app.mount("/static", StaticFiles(directory="static", html=False), name="static")
@@ -51,3 +56,24 @@ def get_summary():
         "featured_device": featured_device.dict(),  # Convert model to dict for JSON response
     }
 
+# Analytics Page #
+
+@app.get("/api/devices/{device_id}/chart")
+def get_device_chart_data(device_id: str):
+    try:
+        # Always regenerate the Excel file
+        simulate_data()
+
+        # Load newly generated data
+        df = pd.read_excel("simulated_iot_data.xlsx")
+
+        # Filter data for the specific device_id
+        device_data = df[df["device_id"] == device_id]
+
+        if device_data.empty:
+            raise HTTPException(status_code=404, detail=f"No simulated data found for device '{device_id}'")
+
+        return device_data.to_dict(orient="records")
+
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Simulated data file not found")

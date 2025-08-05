@@ -1,6 +1,6 @@
 # IoT Device Monitoring Dashboard
 
-This project is a full-stack IoT dashboard that simulates and displays real-time data from multiple industrial devices. It allows users to monitor temperature, vibration, sound, and power and many more data through interactive charts and device management interfaces.
+This project is a full-stack IoT dashboard that simulates and displays real-time data from multiple industrial devices. It allows users to monitor temperature, vibration, sound, and power and many more data through interactive charts and device management interfaces. It can be used to identify anomalies, detect errors and set alerts or notifications in future deployment.
 
 ---
 
@@ -25,8 +25,8 @@ https://github.com/Willowtea1/IoT-Device-Monitoring-Dashboard
 ### 1. Backend (FastAPI)
 
 ```bash
-# Navigate to the project root directory (e.g., Monitor)
-cd ~/Monitor
+# Navigate to the project root directory (e.g., IoT-Device-Monitoring-Dashboard)
+cd IoT-Device-Monitoring-Dashboard
 
 # Create a virtual environment
 python -m venv .venv
@@ -48,6 +48,11 @@ uvicorn main:app --reload
 ### 2. Frontend (Vuetify)
 
 ```bash
+# Open a new terminal (Ctrl + Shift + `)
+
+# Navigate to the project root directory (e.g., IoT-Device-Monitoring-Dashboard)
+cd IoT-Device-Monitoring-Dashboard
+
 # Navigate to frontend directory
 cd frontend
 
